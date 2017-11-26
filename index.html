@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		 $('input[type=file]').on('change', function(event)
+		 {
+		 	var file = event.target.files[0];
+		 	var data  = new FormData();
+		 	$.each(event.target.files, function(key ,value){
+
+		 		data.append(key, value);
+		 	})
+		 	$.ajax({
+		    url: 'http://localhost:8081/file_upload',
+		    type: 'POST',
+		    data: data,
+		    cache: false,
+		    dataType: 'json',
+		    processData: false, // Don't process the files
+		    contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+		    success: function(data, textStatus, jqXHR)
+		    {
+		        if(data.success==200)
+		        {
+		        	alert('success');
+		        	$("form").trigger("reset");
+
+		        }
+
+
+		    }
+
+		 });
+
+		});
+	});
+
+</script>
+</head>
+<body>
+	<form enctype="multipart/form-data">
+		<div id="dropBox">
+        	<p>Select file to upload</p>
+    	</div>
+		<input type="file" name="fileInput" id = "fileInput">
+
+
+	</form>
+
+</body>
+</html>
